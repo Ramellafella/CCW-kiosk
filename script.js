@@ -76,7 +76,7 @@ function openForm(type) {
             </div>
 
             <div class="success">
-                <div class="big">♥︎</div>
+                <div class="big"><img src="images/give.svg" alt=""></div>
                 <h2>Secure Giving</h2>
                 <p>This button will take you to our secure giving provider rather than collecting your bank details here.</p>
                 <div class="actions">

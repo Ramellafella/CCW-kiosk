@@ -188,6 +188,16 @@ main {
 .tile .icon {
     color: var(--ink);
     -webkit-text-fill-color: var(--ink);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tile .icon img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    display: block;
 }
 
 .tile h2 {
