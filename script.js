@@ -20,7 +20,32 @@ const forms = {
             ["Email", "email", "email"],
             ["Phone number (optional)", "phone", "tel"]
         ],
-        choices: ["Kids", "Music", "Welcome", "Hospitality", "Visual Media", "Something Else"]
+        choices: [
+            {
+                title: "Kids",
+                description: 'Help our children explore faith in a safe and fun environment.'
+            },
+            {
+                title: "Music",
+                description: 'Sing or play an instrument as part of our music team.'
+            },
+            {
+                title: "Welcome",
+                description: 'Greet people and help vistors feel welcome.'
+            },
+            {
+                title: "Hospitality",
+                description: 'Help prepare refreshments and create a warm space to connect with one another.'
+            },
+            {
+                title: "Audio-Visual",
+                description: 'Help with sound, screens, or slides on Sundays.'
+            },
+            {
+                title: "Something Else",
+                description: 'Have another idea? Tell us how you would love to help.'
+            }
+        ]
     },
 
     new: {
@@ -120,7 +145,11 @@ function openForm(type) {
                 <label>What interests you?</label>
 
                 <div class="choices">
-                    ${form.choices.map(choice => `<button type="button" class="choice">${choice}</button>`).join("")}
+                    ${form.choices.map(choice => `
+                        <button type="button" class="choice">
+                            <b>${choice.title}<b>
+                            <span class="choice-description">${choice.description}</span>
+                        </button>`).join("")}
                 </div>
             `;
         }
@@ -202,64 +231,3 @@ function updateClock() {
 
 updateClock();
 setInterval(updateClock, 30000);
-
-const serveDescriptions = [
-    {
-        keywords: /kids|children|childrens|children's/i,
-        description: 'Help our children explore faith in a safe and fun environment.'
-    },
-    {
-        keywords: /music|worship team|sing|instrument/i,
-        description: 'Sing or play an instrument as part of our music team.'
-    },
-    {
-        keywords: /welcome team|welcome|greet/i,
-        description: 'Greet people and help vistors feel welcome.'
-    },
-    {
-        keywords: /hospitality|refreshment|coffee|tea/i,
-        description: 'Help prepare refreshments and create a warm space to connect with one another.'
-    },
-    {
-        keywords: /visual media|media|sound|tech|tech|av|slides/i,
-        description: 'Help with sound, screens, or slides on Sundays.'
-    },
-    {
-        keywords: /something else|other/i,
-        description: 'Have another idea? Tell us how you would love to help.'
-    }
-];
-
-function addServeDescriptions() {
-    const modal = document.getElementById('modal');
-    if (!modal) return;
-    
-    const heading = [...modal.querySelectorAll('h1, h2, h3')].find(el => /serve|volunteer/i.test(el.textContent));
-    if(!heading) return;
-
-    modal.querySelectorAll('.choice').forEach(button => {
-        if (button.dataset.cardEnhanced === 'true') return;
-
-        const optionText = button.textContent.trim();
-        const match = serveDescriptions.find(item => item.keywords.test(optionText));
-        if (!match) return;
-
-        const description = document.createElement('span');
-        description.className = 'choice-description';
-        description.textContent = match.description;
-
-        button.appendChild(description);
-        button.dataset.cardEnhanced = 'true';
-    });
-}
-
-const serveModal = document.getElementById('modal');
-
-if (serveModal) {
-    new MutationObserver(addServeDescriptions).observe(serveModal, {
-        childList: true,
-        subtree: true
-    }) ;
-}
-
-addServeDescriptions();
