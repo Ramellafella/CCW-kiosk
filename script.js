@@ -189,11 +189,18 @@ function openForm(type) {
 }
 
 function fakeSuccess(label) {
+    const messages = {
+        "Stay Connected": "Thanks for your interest! This prototype hasn't added you to the email list yet.",
+        "Serve with Us": "Thanks for your interest in serving! This prototype didn't send your details anywhere.",
+        "I'm New": "Thanks for providing your details! We'll be in further contact soon.",
+        "Giving": "Thank you for your generousity! Secure giving hasn't been set up yet."
+    };
+
     modal.innerHTML = `
         <div class="success">
             <div class="big">✔️</div>
             <h2>Thank you!</h2>
-            <p>Your request to ${label.toLowerCase()} has been submitted in the prototype.</p>
+            <p>${messages[label] || "Thanks for your interest! This is a prototype, so nothing happened."}</p>
             <div class="actions">
                 <button class="btn primary" onclick="closeModal()">Back to Welcome</button>
             </div>
@@ -221,13 +228,135 @@ document.addEventListener("click", event => {
     }
 });
 
-function updateClock() {
-    document.getElementById("clock").textContent = new Intl.DateTimeFormat("en-GB", {
-        weekday: "short",
-        hour: "2-digit",
-        minute: "2-digit"
-    }).format(new Date());
+const IDLE_TIMEOUT_MS = 60 * 1000;
+const PROMPT_TIMEOUT_MS = 30 * 1000;
+
+let idleTimer;
+let promptTimer;
+
+
+function clearUnfinishedForm() {
+    const modal = document.getElementById("modal");
+
+    if (!modal) return;
+
+    modal.querySelectorAll("input, textarea, select").forEach(field => {
+        if (field.type === "checkbox" || field.type === "radio") {
+            field.checked = false;
+        } else {
+            field.value = "";
+        }
+    });
 }
 
-updateClock();
-setInterval(updateClock, 30000);
+function removeIdlePrompt() {
+    const prompt = document.getElementById("idle-presence-prompt");
+
+    if(prompt) prompt.remove();
+
+    clearTimeout(promptTimer);
+}
+
+function returnToWelcome(){
+    removeIdlePrompt();
+    clearUnfinishedForm();
+    closeModal();
+}
+
+function showIdlePrompt() {
+    const overlay = document.getElementById("overlay");
+
+    if (!overlay || !overlay.classList.contains("open")) {
+        return;
+    }
+
+    removeIdlePrompt();
+
+    const prompt = document.createElement("div");
+    prompt.id = "idle-presence-prompt";
+    prompt.setAttribute("role", "alertdialog");
+    prompt.setAttribute("aria-modal", "true");
+    prompt.setAttribute("aria-labelledby", "idle-prompt-title");
+    prompt.style.cssText = `
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        background: rgba(20, 20, 20, 0.72);
+    `;
+
+    prompt.innerHTML = `
+        <div style="
+            width: min(100%, 420px);
+            padding: 28px;
+            border-radius: 18px;
+            background: #fff;
+            color: var(--ink);
+            text-align: center;
+            box-shadow: 0 12px 40px rgba (0,0,0,.25);
+        ">
+            <h2 id="idle-prompt-title">Would you like to continue?</h2>
+            <div style="
+                display: flex;
+                gap: 12px;
+                justify-content: center;
+                align-items: center;
+                flex-wrap: wrap;
+                margin-top: 22px;
+            ">
+                <button type="button" id="idle-stay" style="
+                    padding: 14px 20px;
+                    border: 0;
+                    border-radius: 10px;
+                    background: var(--accent);
+                    color: #fff;
+                    font-weight: 700
+                ">
+                    Yes, I'm still here
+                </button>
+                
+                <button type="button" id="idle-exit" style="
+                    padding: 14px 20px;
+                    border: 1px solid #1b1b1b;
+                    border-radius: 10px;
+                    background: #fff;
+                    color: var(--ink);
+                ">
+                    Start over
+                </button>
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(prompt);
+
+    document.getElementById("idle-stay").onclick = () => {
+        removeIdlePrompt();
+        resetIdleTimer();
+    };
+
+    document.getElementById("idle-exit").onclick = () => {
+        returnToWelcome();
+    };
+
+    promptTimer = setTimeout(returnToWelcome, PROMPT_TIMEOUT_MS);
+}
+
+function resetIdleTimer() {
+    clearTimeout(idleTimer);
+
+    if (document.getElementById("idle-presence-prompt")) {
+        return;
+    }
+
+    idleTimer = setTimeout(showIdlePrompt, IDLE_TIMEOUT_MS);
+}
+
+["pointerdown", "keydown", "input", "change"].forEach(eventName => {
+    document.addEventListener(eventName, resetIdleTimer);
+});
+
+resetIdleTimer();

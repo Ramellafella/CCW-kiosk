@@ -70,6 +70,14 @@ header {
     gap: 13px;
 }
 
+.brand-logo {
+    display: block;
+    width: 58px;
+    height: 58px;
+    object-fit: contain;
+    flex: 0 0 auto;
+}
+
 .brand strong {
     display: block;
     font-size: 18px;
@@ -81,11 +89,6 @@ header {
     color: var(--muted);
     font-size: 13px;
     margin-top: 2px;
-}
-
-.clock {
-    color: var(--muted);
-    font-size: 13px;
 }
 
 main {
@@ -107,7 +110,8 @@ main {
     color: var(--accent);
     text-transform: none;
     letter-spacing: normal;
-    font-size: 18px;
+    line-height: 1.2;
+    margin-bottom: 18px;
 }
 
 .hero h1 {
