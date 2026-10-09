@@ -157,6 +157,7 @@ main {
 }
 
 .tile h2 {
+    color: var(--ink);
     font-size: 19px;
     margin: 0 0 7px;
     letter-spacing: -.02em;
