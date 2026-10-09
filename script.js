@@ -41,8 +41,12 @@ const forms = {
                 description: 'Help prepare refreshments and create a warm space to connect with one another.'
             },
             {
-                title: "Audio-Visual",
-                description: 'Help with sound, screens, or slides on Sundays.'
+                title: "Audio",
+                description: 'Help manage sound, microphones, and instruments during a service.'
+            },
+            {
+                title: "Visual Media",
+                description: 'Help manage screens and slides during a service.'
             },
             {
                 title: "Something Else",
@@ -147,7 +151,7 @@ function openForm(type) {
             html += `
                 <label>What interests you?</label>
 
-                <div class="choices">
+                <div class="serve-choices">
                     ${form.choices.map(choice => `
                         <button type="button" class="choice">
                             <b>${choice.title}</b>

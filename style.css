@@ -299,10 +299,16 @@ textarea {
     resize: vertical;
 }
 
-.choices {
+.choices, .serve-choices {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
+}
+
+.serve-choices .choice:last-child {
+    grid-column: 1 / -1;
+    text-align: center;
+    align-items: center;
 }
 
 .choice {
