@@ -130,6 +130,9 @@ main {
 }
 
 .tile {
+    appearance: none;
+    -webkit-appearance: none;
+    color: var(--ink);
     border: 1px solid var(--line);
     background: var(--surface);
     border-radius: 24px;
@@ -152,12 +155,14 @@ main {
 }
 
 .icon {
+    color: var(--ink);
     font-size: 28px;
     margin-bottom: 22px;
 }
 
 .tile h2 {
     color: var(--ink);
+    font-family: "Futura Md Bold", Futura, sans-serif;
     font-size: 19px;
     margin: 0 0 7px;
     letter-spacing: -.02em;
