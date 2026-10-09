@@ -1,5 +1,7 @@
 const overlay = document.getElementById("overlay");
 const modal = document.getElementById("modal");
+const KIOSK_ENDPOINT = "https://script.google.com/macros/s/AKfycbx7LUmxS-GvER-PMvedJzx8-x9p_5vOAo3gxpnhTO3_AColU77e6Phm-GV74aX577bo3w/exec";
+
 const forms = {
     connect: {
         title: "Stay Connected",
@@ -16,7 +18,8 @@ const forms = {
         title: "Serve with Us",
         intro: "Tell us what interests you. We'll then follow up with you about it.",
         fields: [
-            ["Your name", "name", "text"],
+            ["First name", "first", "text"],
+            ["Last name", "last", "text"],
             ["Email", "email", "email"],
             ["Phone number (optional)", "phone", "tel"]
         ],
@@ -135,7 +138,7 @@ function openForm(type) {
             html += `
                 <label>
                     ${field[0]}
-                    <input name="${field[1]}" type="${field[2]}" ${field[1] === "email" ? 'autocomplete="email"' : ""}>
+                    <input name="${field[1]}" type="${field[2]}" ${["first", "last", "name", "email"].includes(field[1]) ? "required" : ""} ${field[1] === "email" ? 'autocomplete="email"' : ""}>
                 </label>
             `;
         }
@@ -179,9 +182,82 @@ function openForm(type) {
             };
         });
 
-        document.getElementById("activeForm").onsubmit = event => {
+        document.getElementById("activeForm").onsubmit = async event => {
             event.preventDefault();
-            fakeSuccess(form.title);
+
+            const activeForm = event.currentTarget;
+            const submitButton = activeForm.querySelector('button[type="submit"]');
+
+            //Maybe connect Mailchimp later?
+            if (type === "connect") {
+                fakeSuccess(form.title);
+                return;
+            }
+
+            if (type !== "new" && type !== "serve") return;
+            if (!activeForm.reportValidity()) return;
+
+            const values = new FormData(activeForm);
+            const interests = [...activeForm.querySelectorAll(".choice.selected b")].map(item => item.textContent.trim());
+            const payload = {
+                type,
+                firstName: values.get("first") || "",
+                lastName: values.get("last") || "",
+                name: values.get("name") || "",
+                email: values.get("email") || "",
+                phone: values.get("phone") || "",
+                interests,
+                website: ""
+            };
+
+            if (type === "serve" && interests.length === 0) {
+                let notice = activeForm.querySelector(".choice-error");
+
+                if (!notice) {
+                    notice = document.createElement("p");
+                    notice.className = "choice-error";
+                    notice.setAttribute("role", "alert");
+                    notice.style.color = "#b42318";
+                    notice.style.fontWeight = "600";
+
+                    const choices = activeForm.querySelector(".choices");
+                    choices.insertAdjacentElement("afterend", notice);
+                }
+
+                notice.textContent = "Please select at least one are you'd like to serve in.";
+                return;
+            }
+
+            submitButton.disabled = true;
+            submitButton.textContent = "Sending...";
+
+            try {
+                await fetch(KIOSK_ENDPOINT, { method: "POST", mode: "no-cors", headers: {"Content-Type":"text/plain;charset=UTF-8"}, body: JSON.stringify(payload)});
+
+                modal.innerHTML = `
+                    <div class="success">
+                        <div class="big">✔️</div>
+                        <h2>Thank you!</h2>
+                        <p>Sent! We'll be in touch.</p>
+                        <div class="actions">
+                            <button class="btn primary" onclick="closeModal()">Back to Welcome</button>
+                        </div>
+                    </div>
+                `;
+            } catch (error) {
+                console.error("Kiosk submission failed:", error);
+                submitButton.disabled = false;
+                submitButton.textContent = "Try again";
+
+                let notice = activeForm.querySelector(".submit-error");
+                if (!notice) {
+                    notice = document.createElement("p");
+                    notice.className = "submit-error";
+                    notice.setAttribute("role", "alert");
+                    activeForm.appendChild(notice);
+                }
+                notice.textContent = "Unable to send. Please try again or speak to a member of staff."
+            }
         };
     }
 
