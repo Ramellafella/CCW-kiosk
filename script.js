@@ -31,7 +31,7 @@ const forms = {
             },
             {
                 title: "Welcome",
-                description: 'Greet people and help vistors feel welcome.'
+                description: 'Greet people and help visitors feel welcome.'
             },
             {
                 title: "Hospitality",
@@ -147,7 +147,7 @@ function openForm(type) {
                 <div class="choices">
                     ${form.choices.map(choice => `
                         <button type="button" class="choice">
-                            <b>${choice.title}<b>
+                            <b>${choice.title}</b>
                             <span class="choice-description">${choice.description}</span>
                         </button>`).join("")}
                 </div>
@@ -193,7 +193,7 @@ function fakeSuccess(label) {
         <div class="success">
             <div class="big">✔️</div>
             <h2>Thank you!</h2>
-            <p>Your ${label.toLowerCase()} request has been submitted in the prototype.</p>
+            <p>Your request to ${label.toLowerCase()} has been submitted in the prototype.</p>
             <div class="actions">
                 <button class="btn primary" onclick="closeModal()">Back to Welcome</button>
             </div>
