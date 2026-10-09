@@ -160,6 +160,11 @@ main {
     margin-bottom: 22px;
 }
 
+.tile .icon {
+    color: var(--ink);
+    -webkit-text-fill-color: var(--ink);
+}
+
 .tile h2 {
     color: var(--ink);
     font-family: "Futura Md Bold", Futura, sans-serif;
@@ -266,6 +271,10 @@ textarea {
 }
 
 .choice {
+    appearance: none;
+    -webkit-appearance: none;
+    color: var(--ink);
+    -webkit-text-fill-color: var(--ink);
     border: 1px solid var(--line);
     background: var(--bg);
     padding: 14px;
