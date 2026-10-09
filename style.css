@@ -281,6 +281,7 @@ textarea {
     border-radius: 13px;
     cursor: pointer;
     text-align: left;
+    font: inherit;
 }
 
 .choice.selected {
