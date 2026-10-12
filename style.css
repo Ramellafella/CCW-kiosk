@@ -136,24 +136,6 @@ main {
     text-align: left;
 }
 
-@media (min-width: 761px) {
-    .grid {
-        grid-template-columns: repeat(6, minmax(0,1fr));
-    }
-
-    .grid .tile {
-        grid-column: span 2;
-    }
-
-    .grid .tile:nth-child(4) {
-        grid-column: 2 / span 2;
-    }
-
-    .grid .tile:nth-child(5) {
-        grid-column: 4 / span 2;
-    }
- }
-
 .tile {
     appearance: none;
     -webkit-appearance: none;
@@ -202,7 +184,6 @@ main {
 
 .tile h2 {
     color: var(--ink);
-    font-family: "Futura Md Bold", Futura, sans-serif;
     font-size: 19px;
     margin: 0 0 7px;
     letter-spacing: -.02em;
@@ -262,9 +243,178 @@ footer {
     margin: 0 0 7px;
 }
 
-.modal .intro {
+.modal .intro, .description {
     color: var(--muted);
     margin: 0 0 24px;
+}
+
+.modal form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.modal form label {
+    display: block;
+    margin: 8px 0 5px;
+    color: var(--ink);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.45;
+}
+
+.modal form input:not([type="checkbox"]):not([type="radio"]),
+.modal form select,
+.modal form textarea {
+    display: block;
+    width: 100%;
+    min-height: 50px;
+    margin: 0 0 14px;
+    padding: 13px 15px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: #fff;
+    color: var(--ink);
+    font: inherit;
+    font-size: 16px;
+    transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+.modal form textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+.modal form input:not([type="checkbox"]):not([type="radio"]):focus,
+.modal form select:focus,
+.modal form textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(0, 151, 178, .15);
+}
+
+.modal form input[type="checkbox"],
+.modal form input[type="radio"] {
+    width: 20px;
+    height: 20px;
+    flex: 0 0 20px;
+    margin: 2px 9px 0 0;
+    accent-color: var(--accent);
+    cursor: pointer;
+}
+
+.modal form label:has(input[type="checkbox"]),
+.modal form label:has(input[type="radio"]) {
+    display: flex;
+    align-items: flex-start;
+    gap: 3px;
+    margin: 12px 0;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+.modal form .child-section h3 {
+    margin: 0 0 16px;
+    color: var(--accent2);
+    font-family: "Futura Md Bold", Futura, sans-serif;
+}
+
+.modal form .parent-fieldset,
+.modal form .child-container {
+    min-width: 0;
+    margin: 8px 0;
+    padding: 20px;
+    border: 1px solid var(--line);
+    background: #fff;
+}
+
+.modal form .parent-fieldset {
+    margin-top: 0;
+    margin: 8px 0;
+    min-width: 0;
+    padding: 20px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: #fff;
+}
+
+.modal form .children-container {
+    min-width: 0;
+    margin: 8px 0;
+    padding: 20px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.modal form > h3,
+.modal form .children-container > h3 {
+    margin: 12px 0 4px;
+    color: var(--accent2);
+    font-family: "Futura Md Bold", Futura, sans-serif;
+    font-size: 20px;
+}
+
+.modal form .child-section {
+    min-width: 0;
+    padding: 20px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: #fff;
+}
+
+.modal form .child-section h3 {
+    margin: 0 0 16px;
+    color: var(--accent2);
+    font-family: "Futura Md Bold", Futura, sans-serif;
+}
+
+.modal form .form-checkboxes {
+    min-width: 0;
+    margin: 20px 0;
+    padding: 20px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+}
+
+.modal form button[type="submit"],
+.modal form button[type="button"] {
+    min-height: 50px;
+    padding: 13px 20px;
+    border-radius: 12px;
+    font: inherit;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background .2s ease, transform .2s ease;
+}
+
+.modal form button[type="submit"] {
+    border: none;
+    background: var(--accent);
+    color: #fff;
+}
+
+.modal form button[type="submit"]:hover {
+    background: #0087b2;
+}
+
+.modal form button[type="submit"]:active {
+    transform: scale(.98);
+}
+
+.modal form button[type="button"] {
+    border: 1px solid var(--line);
+    background: #fff;
+    color: var(--ink);
+}
+
+.modal form button[type="button"]:hover {
+    border-color: var(--accent);
+    background: #f0fafc;
 }
 
 .close {
@@ -273,30 +423,6 @@ footer {
     font-size: 25px;
     cursor: pointer;
     color: var(--muted);
-}
-
-label {
-    display: block;
-    font-weight: 700;
-    font-size: 13px;
-    margin: 16px 0 7px;
-}
-
-input,
-select,
-textarea {
-    width: 100%;
-    border: 1px solid var(--line);
-    background: var(--bg);
-    color: var(--ink);
-    border-radius: 13px;
-    padding: 14px;
-    font: inherit;
-}
-
-textarea {
-    min-height: 120px;
-    resize: vertical;
 }
 
 .choices, .serve-choices {
@@ -318,7 +444,7 @@ textarea {
     gap: 7px;
     width: 100%;
     min-height: 92px;
-    white-space: none;
+    white-space: normal;
     appearance: none;
     -webkit-appearance: none;
     color: var(--ink);
@@ -350,6 +476,21 @@ textarea {
     border-color: var(--accent);
     box-shadow: inset 0 0 0 2px var(--accent);
     background: #eef4f1;
+}
+
+.serve-fieldset {
+    min-width: 0;
+    margin: 20px 0;
+    padding: 0;
+    border: none;
+}
+
+.serve-fieldset legend {
+    margin-bottom: 12px;
+    padding: 0;
+    color: var(--ink);
+    font-size: 18px;
+    font-weight: 700;
 }
 
 .actions {
@@ -404,6 +545,32 @@ textarea {
     font-weight: 700;
 }
 
+@media (min-width: 640px) {
+    .modal form .child-section .child-fields {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: 18px;
+    }
+}
+
+@media (min-width: 761px) {
+    .grid {
+        grid-template-columns: repeat(6, minmax(0,1fr));
+    }
+
+    .grid .tile {
+        grid-column: span 2;
+    }
+
+    .grid .tile:nth-child(4) {
+        grid-column: 2 / span 2;
+    }
+
+    .grid .tile:nth-child(5) {
+        grid-column: 4 / span 2;
+    }
+ }
+
 /* Tablet / iPad */
 
 @media (max-width: 760px) {
@@ -454,6 +621,23 @@ textarea {
 
     .choices {
         grid-template-columns: 1fr;
+    }
+
+    .modal {
+        padding: 20px;
+        border-radius: 20px;
+    }
+
+    .modal form .child-section {
+        padding: 15px;
+    }
+
+    .modal form .actions {
+        flex-direction: column;
+    }
+
+    .modal form .actions button {
+        width: 100%;
     }
 }
 
