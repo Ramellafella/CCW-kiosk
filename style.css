@@ -364,6 +364,7 @@ footer {
     border: 1px solid var(--line);
     border-radius: 14px;
     background: #fff;
+    color: var(--accent);
 }
 
 .modal form .child-section h3 {
@@ -372,12 +373,51 @@ footer {
     font-family: "Futura Md Bold", Futura, sans-serif;
 }
 
+.modal form .children-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.modal form .child-consent {
+    min-width: 0;
+    margin: 16px 0;
+    padding: 16px 20px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: #fff;
+}
+
+.modal form .child-consent legend {
+    padding: 0 8px;
+    color: var(--ink);
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.modal form .child-consent label {
+    display: flex;
+    align-items: flex-start;
+    gap: 3px;
+    margin: 12px 0;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+.modal form .child-consent input[type="radio"] {
+    appearance: auto;
+    -webkit-appearance: radio;
+    width: 20px;
+    height: 20px;
+    flex: 0 0 20px;
+    margin: 2px 9px 0 0; 
+    accent-color: var(--accent);
+    border-radius: 50%;
+}
+
 .modal form .form-checkboxes {
     min-width: 0;
     margin: 20px 0;
-    padding: 20px;
-    border: 1px solid var(--line);
-    border-radius: 14px;
 }
 
 .modal form button[type="submit"],

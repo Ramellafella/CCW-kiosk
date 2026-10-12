@@ -72,10 +72,10 @@ const forms = {
         title: "Sunday Club Registration",
         intro: "If your child is new, please complete this form so our Sunday Club teams can prepare to welcome your child.",
         fields: [
-            ["Parent/Guardian first name", "guardianFirst", "text", true],
-            ["Parent/Guardian last name", "guardianLast", "text", true],
-            ["Parent/Guardian email", "guardianEmail", "email", true],
-            ["Parent/Guardian contact number", "guardianPhone", "tel", true],
+            ["First name*", "guardianFirst", "text", true],
+            ["Last name*", "guardianLast", "text", true],
+            ["Email*", "guardianEmail", "email", true],
+            ["Phone number*", "guardianPhone", "tel", true],
         ], 
         checkboxes: [
             {
@@ -102,22 +102,22 @@ function createChildSection(index) {
         <legend>Child ${index + 1}</legend>
 
         <label>
-            Child's First Name *
+            First Name*
             <input type="text" name="children[${index}][firstName]" autocomplete="off" required>
         </label>
 
         <label>
-            Child's Last Name *
+            Last Name*
             <input type="text" name="children[${index}][lastName]" autocomplete="off" required>
         </label>
 
         <label>
-            Date of Birth *
+            Date of Birth*
             <input type="date" name="children[${index}][dateOfBirth]" autocomplete="off" required>
         </label>
 
         <label>
-            School Year *
+            School Year*
             <select name="children[${index}][schoolYear]" required>
                 <option value="">Select school year</option>
                 <option value="Not yet in school">Not yet in school</option>
@@ -136,7 +136,7 @@ function createChildSection(index) {
         </label>
 
         <fieldset class="child-consent">
-            <legend>Photo and video permission *</legend>
+            <legend>Photo and video permission*</legend>
             <p class="description">Do you give permit photos or videos of your children to be taken? These may be used in the chuch's publicity. Name's will be kept anonymous.</p>
             <label>
                 <input type="radio" name="children[${index}][photoConsent]" value="yes" required>Yes, I give permission
@@ -319,8 +319,8 @@ function openForm(type) {
         if (type === "registration") {
             html += `
                 </fieldset>
-                <div class="children-container">
-                    <h3>Children</h3>
+                <h3>Children</h3>
+                    <div class="children-container">
                     <div class="children-list"></div>
 
                     <button type="button" class="btn secondary add-child">+ Add Another Child</button>
