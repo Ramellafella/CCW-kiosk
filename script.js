@@ -9,10 +9,10 @@ const forms = {
         title: "Connect With Us",
         intro: "Whether you're new to CCW or want to keep up with church news, we'd love to hear from you.", 
         fields: [
-            ["First name", "first", "text", true],
-            ["Last name", "last", "text", true],
-            ["Email", "email", "email", true],
-            ["Phone number (optional)", "phone", "tel", false],
+            ["First name*", "first", "text", true],
+            ["Last name*", "last", "text", true],
+            ["Email*", "email", "email", true],
+            ["Phone number", "phone", "tel", false],
             
         ], 
         checkboxes: [
@@ -31,10 +31,10 @@ const forms = {
         title: "Serve",
         intro: "Tell us what interests you. We'll then follow up with you about it.",
         fields: [
-            ["First name", "first", "text", true],
-            ["Last name", "last", "text", true],
-            ["Email", "email", "email", true],
-            ["Phone number (optional)", "phone", "tel", false]
+            ["First name*", "first", "text", true],
+            ["Last name*", "last", "text", true],
+            ["Email*", "email", "email", true],
+            ["Phone number", "phone", "tel", false]
         ],
         choices: [
             {
@@ -121,6 +121,7 @@ function createChildSection(index) {
             <select name="children[${index}][schoolYear]" required>
                 <option value="">Select school year</option>
                 <option value="Not yet in school">Not yet in school</option>
+                <option value="Reception">Reception</option>
                 <option value="Year 1">Year 1</option>
                 <option value="Year 2">Year 2</option>
                 <option value="Year 3">Year 3</option>
@@ -137,7 +138,7 @@ function createChildSection(index) {
 
         <fieldset class="child-consent">
             <legend>Photo and video permission*</legend>
-            <p class="description">Do you give permit photos or videos of your children to be taken? These may be used in the chuch's publicity. Name's will be kept anonymous.</p>
+            <p class="description">Do you permit photos or videos of your children to be taken? These may be used in the chuch's publicity. Names will be kept anonymous.</p>
             <label>
                 <input type="radio" name="children[${index}][photoConsent]" value="yes" required>Yes, I give permission
             </label>
