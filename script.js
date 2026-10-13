@@ -133,7 +133,7 @@ function createChildSection(index) {
 
         <label>
             Allergies or relevant medical information
-            <textarea name="children[${index}][medicalInfo]" rows="3"></textarea>
+            <textarea name="children[${index}][additionalInfo]" rows="3"></textarea>
         </label>
 
         <fieldset class="child-consent">
@@ -467,7 +467,7 @@ function openForm(type) {
                     lastName: getFieldValue("lastName"),
                     dateOfBirth: getFieldValue("dateOfBirth"),
                     schoolYear: getFieldValue("schoolYear"),
-                    medicalInfo: getFieldValue("medicalInfo"),
+                    additionalInfo: getFieldValue("additionalInfo"),
                     photoConsent: photoConsent?.value || "",
                 };
             });
@@ -487,11 +487,39 @@ function openForm(type) {
                 children
             };
 
-            //Dev only
-            console.log("Registration form structure prepared");
-            fakeSuccess(form.title);
+            const payload = {
+                type: "registration",
+                guardian: {
+                    firstName: values.get("guardianFirst"),
+                    lastName: values.get("guardianLast"),
+                    email: values.get("guardianEmail"),
+                    phone: values.get("guardianPhone"),
+                },
+                permissions: {
+                    attendance: values.get("permAttendance") === "yes",
+                    dataProtection: values.get("permData") === "yes"
+                },
+                children,
+                website: ""
+            };
 
-            return;
+            try {
+                await fetch(KIOSK_ENDPOINT, { method: "POST", mode: "no-cors", headers: { "Content-Type":"text/plain;charset=UTF-8" }, body: JSON.stringify(payload) });
+
+                modal.innerHTML = `
+                    <div class="success">
+                        <div class="big">✔️</div>
+                        <h2>Registration submitted</h2>
+                        <p>Your registration form has been sent.</p>
+                        <div class="actions">
+                            <button type="button" class="btn primary" onclick="closeModal()">Back to Welcome</button>
+                        </div>
+                    </div>
+                `;
+            } catch (error) {
+                console.error("Registration request failed: ", error);
+                alert("We couldn't send the registration. Please try again or speak to a member of staff.");
+            }
         }
 
         if (type !== "serve") {
