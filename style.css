@@ -380,7 +380,7 @@ footer {
 
 .modal form .child-consent {
     min-width: 0;
-    margin: 16px 0 0 0;
+    margin: 16px 0 10px 0;
     padding: 16px 20px;
     border: 1px solid var(--line);
     border-radius: 14px;
@@ -463,17 +463,21 @@ footer {
     color: var(--muted);
 }
 
+.choices {
+    margin: 10px;
+}
+
 .choices, .serve-choices {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
 }
 
-.serve-choices .choice:last-child {
+/* .serve-choices .choice:last-child {
     grid-column: 1 / -1;
     text-align: center;
     align-items: center;
-}
+} */
 
 .choice {
     display: flex;

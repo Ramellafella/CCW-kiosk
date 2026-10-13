@@ -62,6 +62,10 @@ const forms = {
                 description: 'Help manage screens and slides during a service.'
             },
             {
+                title: "Cleaning",
+                description: 'Help clean the building during the week to help keep our building useable.'
+            },
+            {
                 title: "Something Else",
                 description: 'Have another idea? Tell us how you would love to help.'
             }
@@ -148,7 +152,7 @@ function createChildSection(index) {
             </label>
         </fieldset>
 
-        <button type="button" class="btn secondary remove-child" ${index === 0 ? "hidden" : ""}>Remove Child</button>
+        <button type="button" class="btn secondary remove-child" style="margin: 10px 0px 10px 0px;"${index === 0 ? "hidden" : ""}>Remove Child</button>
     `;
     return section;
 }
@@ -242,8 +246,8 @@ function openForm(type) {
         modal.innerHTML = `
             <div class="modal-head">
                 <div>
-                    <h2>What's On?</h2>
-                    <p class="intro">An updateable list of events and Teams?</p>
+                    <h2>Get Involved</h2>
+                    <p class="intro">An updateable list of events and Teams</p>
                 </div>
 
                 <button type="button" class="close" aria-label="Close">x</button>
